@@ -4,8 +4,6 @@ import * as model from './model.js';
 import recipeView from './view/recipeView.js';
 import {API_URL, TIMER} from './config.js';
 
-const recipeContainer = document.querySelector('.recipe');
-
 const timeout = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
@@ -29,4 +27,7 @@ const controlRecipes = async function() {
   }
 };
 
-['load', 'hashchange'].forEach(ev => window.addEventListener(ev, controlRecipes))
+const init = function() {
+  recipeView.addHendlerRender(controlRecipes)
+}
+init();

@@ -20,6 +20,9 @@ class recipeView {
         this.#parentElement.innerHTML = '';
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
     }
+    addHendlerRender(hendler) {
+        ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, hendler))
+    }
     #generateMarkup() {
         return `
             <figure class="recipe__fig">
