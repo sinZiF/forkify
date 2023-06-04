@@ -2,6 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import * as model from './model.js';
 import recipeView from './view/recipeView.js';
+import {API_URL, TIMER} from './config.js';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -17,14 +18,14 @@ const controlRecipes = async function() {
   try {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
-    // loading recipe
+    // 1.loading recipe
     recipeView.renderSpiner();
-    await model.loadRecipe(hash);
-    // rendering recipe
+    await Promise.race([model.loadRecipe(`${API_URL}${hash}`), timeout(TIMER)])
     const recipe = await JSON.parse(model.state.recipe)
+    // 2.rendering recipe
     recipeView.render(recipe);
     } catch(err) {
-      console.log(err)
+      throw err
   }
 };
 
