@@ -565,7 +565,6 @@ var _modelJs = require("./model.js");
 var _recipeViewJs = require("./view/recipeView.js");
 var _recipeViewJsDefault = parcelHelpers.interopDefault(_recipeViewJs);
 var _configJs = require("./config.js");
-const recipeContainer = document.querySelector(".recipe");
 const timeout = function(s) {
     return new Promise(function(_, reject) {
         setTimeout(function() {
@@ -590,10 +589,10 @@ const controlRecipes = async function() {
         throw err;
     }
 };
-[
-    "load",
-    "hashchange"
-].forEach((ev)=>window.addEventListener(ev, controlRecipes));
+const init = function() {
+    (0, _recipeViewJsDefault.default).addHendlerRender(controlRecipes);
+};
+init();
 
 },{"core-js/modules/es.regexp.flags.js":"gSXXb","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./model.js":"Y4A21","./view/recipeView.js":"7Olh7","./config.js":"k5Hzs"}],"gSXXb":[function(require,module,exports) {
 var global = require("2218fbd6f046cf76");
@@ -2674,6 +2673,12 @@ class recipeView {
             </div>`;
         this.#parentElement.innerHTML = "";
         this.#parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    addHendlerRender(hendler) {
+        [
+            "load",
+            "hashchange"
+        ].forEach((ev)=>window.addEventListener(ev, hendler));
     }
     #generateMarkup() {
         return `
