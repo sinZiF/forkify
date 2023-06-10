@@ -35,7 +35,7 @@ class recipeView {
         this.#clearMarkup();
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
     }
-    addHendlerRender(hendler) {
+    addHandlerRender(hendler) {
         ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, hendler))
     }
     #generateMarkup() {
