@@ -2,12 +2,13 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import * as model from './model.js';
 import RecipeView from './view/recipeView.js';
-import getRecipesView from './view/getRecipesView.js';
+import SearchView from './view/searchView.js';
+import RecipesView from './view/recipesView.js';
 import {API_URL, TIMER} from './config.js';
 
-if (module.hot) {
-  module.hot.accept();
-};
+// if (module.hot) {
+//   module.hot.accept();
+// };
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -34,20 +35,17 @@ const controlRecipe = async function() {
 const constolRecipes = async function() {
   try {
       // 1) load recipes
-      const query = getRecipesView.getQuery();
-      console.log(model.state.search)
+      RecipesView.renderSpiner();
+      const query = SearchView.getQuery();
       await model.loadSearchRecipes(API_URL, query);
-      // 2) converts and rendering data
-      model.state.search.recipes.forEach(recipe => {
-      getRecipesView.render(JSON.parse(recipe));
-    })
+      RecipesView.render(model.state.search.recipes);
   } catch(error) {
-    throw new Error(error)
+    RecipesView.renderError();
   }
 }
 
 const init = function() {
     RecipeView.addHandlerRender(controlRecipe)
-    getRecipesView.addHandlerSearch(constolRecipes)
+    SearchView.addHandlerSearch(constolRecipes)
 }
 init();
