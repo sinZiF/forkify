@@ -1,9 +1,14 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import * as model from './model.js';
-import recipeView from './view/recipeView.js';
-import getRecipesView from './view/getRecipesView.js';
+import RecipeView from './view/recipeView.js';
+import SearchView from './view/searchView.js';
+import RecipesView from './view/recipesView.js';
 import {API_URL, TIMER} from './config.js';
+
+// if (module.hot) {
+//   module.hot.accept();
+// };
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -18,31 +23,29 @@ const controlRecipe = async function() {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
     // 1.loading recipe
-    recipeView.renderSpiner();
+    RecipeView.renderSpiner();
     await Promise.race([model.loadRecipe(`${API_URL}${hash}`), timeout(TIMER)])
     const recipe = await JSON.parse(model.state.recipe)
     // 2.rendering recipe
-    recipeView.render(recipe);
+    RecipeView.render(recipe);
   } catch(err) {
-    recipeView.renderError();
+    RecipeView.renderError();
   }
 };
 const constolRecipes = async function() {
   try {
       // 1) load recipes
-      const query = getRecipesView.getQuery();
+      RecipesView.renderSpiner();
+      const query = SearchView.getQuery();
       await model.loadSearchRecipes(API_URL, query);
-      // 2) converts and rendering data
-      model.state.search.recipes.forEach(recipe => {
-      getRecipesView.render(JSON.parse(recipe));
-    })
+      RecipesView.render(model.state.search.recipes);
   } catch(error) {
-    throw new Error(error)
+    RecipesView.renderError();
   }
 }
 
 const init = function() {
-    recipeView.addHandlerRender(controlRecipe)
-    getRecipesView.addHandlerSearch(constolRecipes)
+    RecipeView.addHandlerRender(controlRecipe)
+    SearchView.addHandlerSearch(constolRecipes)
 }
 init();
