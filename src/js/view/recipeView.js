@@ -1,7 +1,7 @@
 import View from './View.js';
 
 import icons from 'url:../../img/icons.svg';
-const Fraction = require('fractional').Fraction;
+const fracty = require('fracty');
 class RecipeView extends View{
     _parentElement = document.querySelector('.recipe');
     _errorMessage = 'We could not find that recipe. Please try another one!';
@@ -92,7 +92,7 @@ class RecipeView extends View{
                 <svg class="recipe__icon">
                 <use href="${icons}.svg#icon-check"></use>
                 </svg>
-                <div class="recipe__quantity">${cur.quantity ? new Fraction(cur.quantity) : ''}</div>
+                <div class="recipe__quantity">${cur.quantity ? fracty(cur.quantity) : ''}</div>
                 <div class="recipe__description">
                     <span class="recipe__unit">${cur.unit}</span>
                     ${cur.description}
