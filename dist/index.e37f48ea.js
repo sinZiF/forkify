@@ -2730,7 +2730,7 @@ var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _fractional = require("fractional");
+const Fraction = require("71967e6d7623ac43").Fraction;
 class RecipeView extends (0, _viewJsDefault.default) {
     _parentElement = document.querySelector(".recipe");
     _errorMessage = "We could not find that recipe. Please try another one!";
@@ -2823,7 +2823,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
                 <svg class="recipe__icon">
                 <use href="${0, _iconsSvgDefault.default}.svg#icon-check"></use>
                 </svg>
-                <div class="recipe__quantity">${cur.quantity ? new (0, _fractional.Fraction)(cur.quantity) : ""}</div>
+                <div class="recipe__quantity">${cur.quantity ? new Fraction(cur.quantity) : ""}</div>
                 <div class="recipe__description">
                     <span class="recipe__unit">${cur.unit}</span>
                     ${cur.description}
@@ -2833,7 +2833,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
 }
 exports.default = new RecipeView();
 
-},{"url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./View.js":"gAkKI"}],"loVOp":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./View.js":"gAkKI","71967e6d7623ac43":"3SU56"}],"loVOp":[function(require,module,exports) {
 module.exports = require("87cda6e8162d3695").getBundleURL("hWUTQ") + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"87cda6e8162d3695":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -2870,7 +2870,50 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"3SU56":[function(require,module,exports) {
+},{}],"gAkKI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class View {
+    _data;
+    render(data) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError(this._errorMessages);
+        this._data = data;
+        const markup = this._generateMarkup();
+        this._clearMarkup();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderSpiner() {
+        const markup = `
+            <div class="spinner">
+                <svg>
+                    <use href="${(0, _iconsSvgDefault.default)}.svg#icon-loader"></use>
+                </svg>
+            </div>`;
+        this._clearMarkup();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    _clearMarkup() {
+        this._parentElement.innerHTML = "";
+    }
+    renderError(message = this._errorMessage) {
+        const markup = `
+            <div class="error">
+                <div>
+                    <svg>
+                        <use href="${(0, _iconsSvgDefault.default)}.svg#icon-alert-triangle"></use>
+                    </svg>
+                </div>
+                <p>${message}</p>
+            </div>`;
+        this._clearMarkup();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+}
+exports.default = View;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"loVOp"}],"3SU56":[function(require,module,exports) {
 /*
 fraction.js
 A Javascript fraction library.
@@ -3123,50 +3166,7 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}],"gAkKI":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _iconsSvg = require("url:../../img/icons.svg");
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-class View {
-    _data;
-    render(data) {
-        if (!data || Array.isArray(data) && data.length === 0) return this.renderError(this._errorMessages);
-        this._data = data;
-        const markup = this._generateMarkup();
-        this._clearMarkup();
-        this._parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    renderSpiner() {
-        const markup = `
-            <div class="spinner">
-                <svg>
-                    <use href="${(0, _iconsSvgDefault.default)}.svg#icon-loader"></use>
-                </svg>
-            </div>`;
-        this._clearMarkup();
-        this._parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    _clearMarkup() {
-        this._parentElement.innerHTML = "";
-    }
-    renderError(message = this._errorMessage) {
-        const markup = `
-            <div class="error">
-                <div>
-                    <svg>
-                        <use href="${(0, _iconsSvgDefault.default)}.svg#icon-alert-triangle"></use>
-                    </svg>
-                </div>
-                <p>${message}</p>
-            </div>`;
-        this._clearMarkup();
-        this._parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-}
-exports.default = View;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"loVOp"}],"blwqv":[function(require,module,exports) {
+},{}],"blwqv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _viewJs = require("./View.js");
