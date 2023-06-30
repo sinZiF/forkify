@@ -5,6 +5,7 @@ import RecipeView from './view/recipeView.js';
 import SearchView from './view/searchView.js';
 import RecipesView from './view/recipesView.js';
 import {API_URL, TIMER} from './config.js';
+import paginationView from './view/paginationView.js';
 
 // if (module.hot) {
 //   module.hot.accept();
@@ -32,20 +33,29 @@ const controlRecipe = async function() {
     RecipeView.renderError();
   }
 };
-const constolRecipes = async function() {
+const controlRecipes = async function() {
   try {
       // 1) load recipes
       RecipesView.renderSpiner();
       const query = SearchView.getQuery();
       await model.loadSearchRecipes(API_URL, query);
-      RecipesView.render(model.state.search.recipes);
+      RecipesView.render(model.getSearchResultPage());
+
+      paginationView.render(model.state.search);
   } catch(error) {
     RecipesView.renderError();
   }
 }
 
+const controlPagination = function(goTo) {
+  RecipesView.render(model.getSearchResultPage(goTo));
+
+  paginationView.render(model.state.search)
+}
+
 const init = function() {
     RecipeView.addHandlerRender(controlRecipe)
-    SearchView.addHandlerSearch(constolRecipes)
+    SearchView.addHandlerSearch(controlRecipes)
+    paginationView.addHandlerPagination(controlPagination)
 }
 init();
