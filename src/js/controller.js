@@ -53,9 +53,27 @@ const controlPagination = function(goTo) {
   paginationView.render(model.state.search)
 }
 
+const controlServings = function(newServings) {
+  if (!Object.keys(model.state.updateServings).length || JSON.parse(model.state.recipe).id !== model.state.updateServings.id) {
+    const parseRecipe = model.getParseRecipe(newServings);
+    model.state.updateServings = parseRecipe;
+  }
+  if(model.state.updateServings !== model.state.updateServings) {
+
+  }
+  if (newServings > model.state.updateServings.servings) {
+    model.state.updateServings.ingredients.forEach(ingridient => {
+      ingridient.quantity = ingridient.quantity * newServings / model.state.updateServings.servings;
+    });
+    model.state.updateServings.servings = newServings;
+    RecipeView.render(model.state.updateServings)
+  }
+}
+
 const init = function() {
-    RecipeView.addHandlerRender(controlRecipe)
-    SearchView.addHandlerSearch(controlRecipes)
-    paginationView.addHandlerPagination(controlPagination)
+    RecipeView.addHandlerRender(controlRecipe);
+    RecipeView.addHandlerServings(controlServings);
+    SearchView.addHandlerSearch(controlRecipes);
+    paginationView.addHandlerPagination(controlPagination);
 }
 init();
