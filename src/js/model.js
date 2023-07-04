@@ -3,6 +3,7 @@ import {getJSON} from './helpers.js';
 
 export const state = {
     recipe: {},
+    updateServings: {},
     search: {
         query: '',
         recipes: [],
@@ -61,4 +62,12 @@ export const getSearchResultPage = function(page = state.search.page) {
     const end = state.search.page * state.search.resultPerPage;
 
     return state.search.recipes.slice(start, end);
+}
+
+export const getParseRecipe = function() {
+    return state.updateServings = JSON.parse(state.recipe);
+}
+
+export const inspectIdRecipe = function() {
+    const recipe = JSON.parse(state.recipe);
 }
