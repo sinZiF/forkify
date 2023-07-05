@@ -4,6 +4,7 @@
   "description": "recipe application",
   "source": "src/index.html",
   "scripts": {
+    "watch": "parcel watch",
     "start": "parcel",
     "build": "parcel build"
   },
