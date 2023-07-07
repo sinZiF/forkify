@@ -58,10 +58,7 @@ const controlServings = function(newServings) {
     const parseRecipe = model.getParseRecipe(newServings);
     model.state.updateServings = parseRecipe;
   }
-  if(model.state.updateServings !== model.state.updateServings) {
-
-  }
-  if (newServings > model.state.updateServings.servings) {
+  if (newServings > 0) {
     model.state.updateServings.ingredients.forEach(ingridient => {
       ingridient.quantity = ingridient.quantity * newServings / model.state.updateServings.servings;
     });

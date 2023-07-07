@@ -67,7 +67,3 @@ export const getSearchResultPage = function(page = state.search.page) {
 export const getParseRecipe = function() {
     return state.updateServings = JSON.parse(state.recipe);
 }
-
-export const inspectIdRecipe = function() {
-    const recipe = JSON.parse(state.recipe);
-}

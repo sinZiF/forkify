@@ -619,8 +619,7 @@ const controlServings = function(newServings) {
         const parseRecipe = _modelJs.getParseRecipe(newServings);
         _modelJs.state.updateServings = parseRecipe;
     }
-    _modelJs.state.updateServings, _modelJs.state.updateServings;
-    if (newServings > _modelJs.state.updateServings.servings) {
+    if (newServings > 0) {
         _modelJs.state.updateServings.ingredients.forEach((ingridient)=>{
             ingridient.quantity = ingridient.quantity * newServings / _modelJs.state.updateServings.servings;
         });
@@ -2654,7 +2653,6 @@ parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchRecipes", ()=>loadSearchRecipes);
 parcelHelpers.export(exports, "getSearchResultPage", ()=>getSearchResultPage);
 parcelHelpers.export(exports, "getParseRecipe", ()=>getParseRecipe);
-parcelHelpers.export(exports, "inspectIdRecipe", ()=>inspectIdRecipe);
 var _configJs = require("./config.js");
 var _helpersJs = require("./helpers.js");
 const state = {
@@ -2716,9 +2714,6 @@ const getSearchResultPage = function(page = state.search.page) {
 const getParseRecipe = function() {
     return state.updateServings = JSON.parse(state.recipe);
 };
-const inspectIdRecipe = function() {
-    const recipe = JSON.parse(state.recipe);
-};
 
 },{"./helpers.js":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"k5Hzs"}],"hGI1E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2769,6 +2764,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
         this._parentElement.addEventListener("click", function(e) {
             const btn = e.target.closest(".btn--update-servings");
             const { updateTo  } = btn.dataset;
+            console.log(updateTo);
             if (+updateTo > 0) handler(+updateTo);
         });
     }
