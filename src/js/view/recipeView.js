@@ -13,6 +13,7 @@ class RecipeView extends View{
         this._parentElement.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn--update-servings');
             const {updateTo} = btn.dataset;
+            console.log(updateTo)
             if (+updateTo > 0) handler(+updateTo);
         })
     }
