@@ -8,15 +8,6 @@ export default class View {
         this._parentElement.innerHTML = '';
     }
 
-    // closeAddNewRecipe() {
-    //     window.addEventListener('click', e => {
-    //         const btnClose = e.target.classList.contains('btn--close-modal');
-    //         if (!btnClose) return;
-    //         document.querySelector('.add-recipe-window').classList.add('hidden')
-
-    //     })
-    // }
-
     render(data, render = true) {
         if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError(this._errorMessages);
         this._data = data;
