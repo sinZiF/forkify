@@ -31,7 +31,7 @@ export const loadRecipe = async function(id) {
             title: recipe.title
         });
 
-        this.getParseRecipe();
+        getParseRecipe();
         if (state.bookmarks.some(bookmark => bookmark.id === id)) {
             // const idRecipe = state.bookmarks.findIndex(bookmark => bookmark.id = id);
             // state.updateServings.bookmarked = state.bookmarks[idRecipe].bookmarked;
@@ -108,7 +108,7 @@ export const removeBookmark = function(recipe) {
 
 
 export const getParseRecipe = function() {
-    return state.updateServings = JSON.parse(state.recipe);
+    state.updateServings = JSON.parse(state.recipe);
 }
 
 const init = function() {
