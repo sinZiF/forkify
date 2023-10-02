@@ -1,14 +1,14 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import {API_URL, TIMER} from './config.js';
+import {API_URL, TIMER, CLOSE_TIMER} from './config.js';
 import * as model from './model.js';
+import addRecipeView from './view/addRecipeView.js';
 import bookmarksView from './view/bookmarksView.js';
 import paginationView from './view/paginationView.js';
 import recipeView from './view/recipeView.js';
 import recipesView from './view/recipesView.js';
 import searchView from './view/searchView.js';
-import addRecipeView from './view/addRecipeView.js';
 import View from './view/View.js';
 
 const timeout = function (s) {
@@ -80,10 +80,27 @@ const controlBookmark = function() {
 
 const controlBookmarks = function() {
   bookmarksView.render(model.state.bookmarks);
-}
+};
 
-const controlAddRecipe = function(data) {
-  console.log(data)
+const controlAddRecipe = async function(data) {
+  try {
+    addRecipeView.renderSpiner();
+
+    await model.uploadRecipe(data);
+    addRecipeView.renderMessage();
+    recipeView.render(model.state.updateServings);
+    bookmarksView.render(model.state.bookmarks)
+
+
+    setTimeout(function() {
+    addRecipeView.toggleHidden();
+  }, CLOSE_TIMER * 1000)
+  setTimeout(function() {
+    addRecipeView.generateForm();
+  }, CLOSE_TIMER * 2000)
+  } catch(err) {
+    addRecipeView.renderError(err.message);
+  }
 }
 
 const init = function() {
